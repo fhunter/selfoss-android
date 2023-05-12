@@ -1,40 +1,46 @@
 buildscript {
     repositories {
+        google()
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.0'
+        classpath 'com.android.tools.build:gradle:3.1.0'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
     }
 }
 apply plugin: 'com.android.application'
-apply plugin: 'android-apt'
+//apply plugin: 'android-apt'
 
 repositories {
+    google()
     mavenCentral()
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:21.0.3'
-    compile 'com.android.support:appcompat-v7:21.0.3'
-    compile 'com.android.support:support-v13:20.0.0'
-	compile 'org.apache.commons:commons-lang3:3.1'
-	compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.2.2'
-	compile 'com.j256.ormlite:ormlite-android:4.45'
-    compile 'com.github.chrisbanes.actionbarpulltorefresh:library:0.9.3'
-    compile 'org.jsoup:jsoup:1.7.3'
-    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
-    compile 'com.wrapp.floatlabelededittext:library:0.0.5'
-    compile 'com.getbase:floatingactionbutton:1.8.0'
+    implementation 'com.android.support:support-v4:21.0.3'
+    implementation 'com.android.support:appcompat-v7:21.0.3'
+    implementation 'com.android.support:support-v13:21.0.3'
+	implementation 'org.apache.commons:commons-lang3:3.1'
+	implementation 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.2.2'
+	implementation 'com.j256.ormlite:ormlite-android:4.45'
+    implementation 'com.github.chrisbanes.actionbarpulltorefresh:library:0.9.3'
+    implementation 'org.jsoup:jsoup:1.7.3'
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
+    implementation 'com.wrapp.floatlabelededittext:library:0.0.5'
+    implementation 'com.getbase:floatingactionbutton:1.8.0'
 
-    apt 'org.androidannotations:androidannotations:3.2'
-    compile 'org.androidannotations:androidannotations-api:3.2'
+    annotationProcessor 'org.androidannotations:androidannotations:3.2'
+    implementation 'org.androidannotations:androidannotations-api:3.2'
 }
 
 android {
     compileSdkVersion 21
-    buildToolsVersion '21.1.2'
+    buildToolsVersion '27.0.3'
+
+    lintOptions {
+        abortOnError false
+    }
 
     defaultConfig {
         minSdkVersion 15
@@ -47,29 +53,25 @@ android {
         buildConfigField "String", "ACCOUNT_TYPE", "\"fr.ydelouis.selfoss\""
         resValue "string", "authority", "\"fr.ydelouis.selfoss\""
         buildConfigField "String", "AUTHORITY", "\"fr.ydelouis.selfoss\""
+        resValue "string", "resourcePackageName", "\"fr.ydelouis.selfoss\""
     }
 
-    signingConfigs {
-        release {
-            storeFile file(project.rootDir.parentFile.absolutePath+"/yDelouis.keystore")
-            storePassword "***********"
-            keyAlias "ydelouis"
-            keyPassword "***********"
-        }
-    }
+//    signingConfigs {
+//        release {
+//            storeFile file(project.rootDir.parentFile.absolutePath+"/yDelouis.keystore")
+//            storePassword "***********"
+//            keyAlias "ydelouis"
+//            keyPassword "***********"
+//        }
+//    }
 
     buildTypes {
 
         debug {
-            applicationIdSuffix ".debug"
-            resValue "string", "accountType", "\"fr.ydelouis.selfoss.debug\""
-            buildConfigField "String", "ACCOUNT_TYPE", "\"fr.ydelouis.selfoss.debug\""
-            resValue "string", "authority", "\"fr.ydelouis.selfoss.debug\""
-            buildConfigField "String", "AUTHORITY", "\"fr.ydelouis.selfoss.debug\""
         }
 
         release {
-            signingConfig signingConfigs.release
+//            signingConfig signingConfigs.release
         }
     }
 
@@ -85,34 +87,39 @@ android {
         pickFirst 'META-INF/dependencies.txt'
         pickFirst 'META-INF/LGPL2.1'
     }
-}
-
-apt {
-    arguments {
-        logLevel 'warn'
-        androidManifestFile variant.outputs[0].processResources.manifestFile
-        resourcePackageName 'fr.ydelouis.selfoss'
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+        }
     }
 }
 
-task askForPasswords << {
-    def storePw = new String(System.console().readPassword("\n\nKeystore password: "))
-    def keyPw = new String(System.console().readPassword("Key password: "))
+//apt {
+//    arguments {
+//        logLevel 'warn'
+//        androidManifestFile variant.outputs[0].processResources.manifestFile
+//        resourcePackageName 'fr.ydelouis.selfoss'
+//    }
+//}
 
-    android.signingConfigs.release.storePassword = storePw
-    android.signingConfigs.release.keyPassword = keyPw
-}
+//task askForPasswords << {
+//    def storePw = new String(System.console().readPassword("\n\nKeystore password: "))
+//    def keyPw = new String(System.console().readPassword("Key password: "))
+//
+//    android.signingConfigs.release.storePassword = storePw
+//    android.signingConfigs.release.keyPassword = keyPw
+//}
+//
+//tasks.whenTaskAdded { theTask ->
+//    if (theTask.name.equals("packageRelease")) {
+//        theTask.dependsOn "askForPasswords"
+//    }
+//}
 
-tasks.whenTaskAdded { theTask ->
-    if (theTask.name.equals("packageRelease")) {
-        theTask.dependsOn "askForPasswords"
-    }
-}
+//task launchDebug(dependsOn: 'installDebug') << {
+//    "adb shell am start -n fr.ydelouis.selfoss/.activity.MainActivity_".execute()
+//}
 
-task launchDebug(dependsOn: 'installDebug') << {
-    "adb shell am start -n fr.ydelouis.selfoss/.activity.MainActivity_".execute()
-}
-
-task clearData << {
-    "adb shell pm clear fr.ydelouis.selfoss".execute()
-}
+//task clearData << {
+//    "adb shell pm clear fr.ydelouis.selfoss".execute()
+//}
