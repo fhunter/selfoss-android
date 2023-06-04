@@ -13,6 +13,7 @@ import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
+import java.util.Locale;
 
 import fr.ydelouis.selfoss.R;
 import fr.ydelouis.selfoss.entity.Source;
@@ -57,7 +58,7 @@ public class SourceView extends RelativeLayout {
 			imageLoader.displayFavicon(source, icon);
             icon.setVisibility(VISIBLE);
         } else if (source.getTitle() != null && !source.getTitle().isEmpty()) {
-            letter.setText(source.getTitle().substring(0, 1).toUpperCase());
+            letter.setText(source.getTitle().substring(0, 1).toUpperCase(Locale.getDefault()));
             letter.setBackgroundDrawable(new ColorsOvalDrawable(Tag.colorsOfTags(tags)));
             letter.setVisibility(VISIBLE);
         }

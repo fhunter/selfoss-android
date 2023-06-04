@@ -15,6 +15,7 @@ import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
+import java.util.Locale;
 
 import fr.ydelouis.selfoss.R;
 import fr.ydelouis.selfoss.entity.Article;
@@ -78,7 +79,7 @@ public class ArticleView extends RelativeLayout {
             favicon.setVisibility(View.VISIBLE);
         } else if (article.getSourceTitle() != null && !article.getSourceTitle().isEmpty()
                 && tags != null && !tags.isEmpty()) {
-            letter.setText(article.getSourceTitle().substring(0, 1).toUpperCase());
+            letter.setText(article.getSourceTitle().substring(0, 1).toUpperCase(Locale.getDefault()));
             letter.setBackgroundDrawable(new ColorsOvalDrawable(Tag.colorsOfTags(tags)));
             letter.setVisibility(VISIBLE);
         }

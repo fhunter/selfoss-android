@@ -15,6 +15,8 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EViewGroup;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.Locale;
+
 import fr.ydelouis.selfoss.R;
 
 @EViewGroup(R.layout.view_config_sync)
@@ -86,9 +88,9 @@ public class ConfigSyncView extends LinearLayout implements TimePickerDialog.OnT
 		int minutes = getMinutes();
 		String text;
 		if (hours > 0) {
-			text = String.format("%d:%02d", hours, minutes);
+			text = String.format(Locale.getDefault(), "%d:%02d", hours, minutes);
 		} else {
-			text = String.format("%d%s", minutes, getContext().getString(R.string.min));
+			text = String.format(Locale.getDefault(), "%d%s", minutes, getContext().getString(R.string.min));
 		}
 		syncPeriodText.setText(text);
 	}

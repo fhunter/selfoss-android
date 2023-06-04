@@ -13,6 +13,8 @@ import org.androidannotations.annotations.ViewById;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.util.Locale;
+
 import fr.ydelouis.selfoss.R;
 
 @EViewGroup(R.layout.view_config_url)
@@ -49,7 +51,7 @@ public class ConfigUrlView extends LinearLayout {
 		String error = exception.getLocalizedMessage();
 		if (exception instanceof HttpClientErrorException) {
 			HttpStatus status = ((HttpClientErrorException) exception).getStatusCode();
-			error = String.format("(%d) %s", status.value(), status.getReasonPhrase());
+			error = String.format(Locale.getDefault(), "(%d) %s", status.value(), status.getReasonPhrase());
 		}
 		urlEditText.setError(error);
 	}
