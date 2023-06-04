@@ -5,7 +5,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.0'
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+//        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
     }
 }
 apply plugin: 'com.android.application'
@@ -25,7 +25,7 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.2.2'
 	implementation 'com.j256.ormlite:ormlite-android:4.45'
     implementation 'com.github.chrisbanes.actionbarpulltorefresh:library:0.9.3'
-    implementation 'org.jsoup:jsoup:1.7.3'
+    implementation 'org.jsoup:jsoup:1.13.1'
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
     implementation 'com.wrapp.floatlabelededittext:library:0.0.5'
     implementation 'com.getbase:floatingactionbutton:1.8.0'
